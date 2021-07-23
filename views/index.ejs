@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- header -->
+<%- include('./partials/header') %>
+<body>
+    <!-- nav bar -->
+    <%- include('./partials/nav') %>  
+    <div class="content">
+        <% if (data.length > 0) { %>
+            <% data.forEach(data => { %>
+                <a href="/blogs/<%= data._id %> ">
+                    <h3> <%= data.title %> </h3>
+                    <p> <%= data.overview %> </p>
+                </a>
+            <% }) %>
+        <% } else {%>
+            <p>Nothing to print</p>
+        <% } %> 
+    </div>
+    <!-- footer -->
+    <%- include('./partials/footer') %>
+</body>
+</html>

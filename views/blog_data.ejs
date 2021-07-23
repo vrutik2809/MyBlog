@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- header -->
+<%- include('./partials/header') %>
+<body>
+    <!-- nav bar -->
+    <%- include('./partials/nav') %>  
+    <div class="data content">
+        <h1> <%= data.title %> </h1>
+        <h4> <%= data.overview %> </h4>
+        <p> <%= data.discription %> </p>
+        <button id = "delete" data-doc = "<%= data._id %> ">delete</button>
+    </div>
+    <!-- footer -->
+    <%- include('./partials/footer') %>
+</body>
+<script>
+    const id = document.getElementById("delete");
+    const deletepath = `/blogs/${id.dataset.doc}`;
+    async function deleteBlog(){
+        const response = await fetch(deletepath,{
+            method: "delete"
+        });
+        const data = await response.json();
+        window.location.href = "/";
+    }
+    id.addEventListener('click',deleteBlog);
+</script>
+</html>
