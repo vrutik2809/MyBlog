@@ -8,7 +8,7 @@ const blogRoutes = require('./routes/blogRoutes');
 //database connection
 const dBURL = "mongodb+srv://popaye:drowssap@cluster0.m2mv7.mongodb.net/sample?retryWrites=true&w=majority";
 dB.connect(dBURL,{useNewUrlParser : true,useUnifiedTopology: true}) 
-    .then((res) => app.listen(3000))
+    .then((res) => app.listen(process.env.PORT || 3000))
     .catch((err) => console.log(err));
 
 //app.set('views',path.join(__dirname,'views_dir'));
