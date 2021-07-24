@@ -12,11 +12,22 @@
         <h1>Signup</h1>
         <form action="/register" method="POST">
             <label for="username">Username</label>
-            <input type="text" name="username" id="username" required>
+            <input type="text" name="username" id="username" placeholder = "Enter username (without space)" required>
+            <label for="username" id = "lblusername" hidden>Username requirement doesn't match</label><br>
             <label for="password">Password</label>
             <input type="password" name="password" id="password" required>
-            <button type = "submit">Signup</button>
+            <label for="password" id = "lblpassword" hidden>Password  requirement doesn't match</label>
+            <p>Password Configuration</p>
+            <ul>
+                <li>minimum 5 characters</li>
+                <li>One Digit</li>
+                <li>One Uppercase letter</li>
+                <li>One Lowercase letter</li>
+                <li>One Special Character</li>
+            </ul>
+            <button type = "button" id = "signup">Signup</button>
         </form>
     </div>
 </body>
+<script src="/validation.js"></script>
 </html>
