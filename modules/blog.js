@@ -13,8 +13,18 @@ const blogschema = new Schema({
     discription:{
         type: String,
         required: true
+    },
+    username:{
+        type: String,
+        required: true
     }
 },{timestamps : true});
 
-const Blog = dB.model('blogs',blogschema);
-module.exports = Blog;
+function makeConnection(url){
+    return dB.createConnection(url,{useNewUrlParser : true,useUnifiedTopology: true});
+}
+
+module.exports = {
+    makeConnection,
+    blogschema,
+};

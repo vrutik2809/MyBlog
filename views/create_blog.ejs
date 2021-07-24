@@ -6,7 +6,7 @@
     <!-- nav bar -->
     <%- include('./partials/nav') %>  
     <div class="blog content">
-        <form action = "/" method="POST">
+        <form action = "/login/<%= username %>/" method="POST">
             <label for="title" >Blog title</label>
             <input type="text" id = "title" name = "title" required>
             <label for="overview" >Blog overview</label>
