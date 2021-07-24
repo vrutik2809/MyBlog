@@ -2,6 +2,10 @@ const User = require('../modules/user');
 const express = require('express');
 const router = express.Router();
 
+router.get('/',(req,res) =>{
+    res.redirect('/login');
+})
+
 router.get('/login',(req,res) =>{
     res.render('signin',{title : "MyBlog | signin"});
 })
