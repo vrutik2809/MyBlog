@@ -36,9 +36,13 @@ nav p, nav a{
     font-weight: 300;
 }
 footer{
+    position: fixed;
+    bottom: 0;
     color: #777;
     text-align: center;
-    margin: 80px auto 20px;
+    margin: auto;
+    width: 88%;
+    padding: 10px 0;
 }
 h2{
     margin-bottom: 40px;
