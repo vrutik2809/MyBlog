@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400&display=swap');
+body{
+    width: auto;
+    margin: auto;
+    padding: 0 20px;
+    font-family: 'Roboto Slab' , serif;
+}
+.login{
+    max-width: 400px;
+    margin: auto;
+}
+.login h1{
+    text-align: center;
+}
+.login form input{
+    width: 100%;
+    margin: 10px 0px;
+    padding: 8px;
+}
+.login form button{
+    margin-top: 20px;
+    width: 100%;
+    background:blue;
+    color: white;
+    padding: 6px;
+    border: 0;
+    font-size: 1.2em;
+    cursor: pointer;
+}

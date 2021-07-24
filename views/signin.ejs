@@ -8,14 +8,16 @@
     <link rel="stylesheet" href="/signin.css">
 </head>
 <body>
-    <h1>Login</h1>
-    <form action="/login" method="POST">
-        <label for="username">Username</label>
-        <input type="text" name="username" id="username">
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password">
-        <button type = "submit">Login</button>
-    </form>
-    <h2>Don't have an account? <a href="/register">signup</a></h2>
+    <div class="login">
+        <h1>Login</h1>
+        <form action="/login" method="POST">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password">
+            <button type = "submit">Login</button>
+        </form>
+        <h2>Don't have an account? <a href="/register">signup</a></h2>
+    </div>
 </body>
 </html>
