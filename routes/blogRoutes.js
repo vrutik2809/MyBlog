@@ -3,7 +3,7 @@ const User = require('../modules/user');
 const express = require('express');
 const routes = express.Router();
 
-routes.get('/login/:username/',(req,res) =>{
+routes.get('/user/:username/',(req,res) =>{
     User.findOne({username: req.params.username})
         .then((result) => {
             if(result == null){
@@ -21,7 +21,7 @@ routes.get('/login/:username/',(req,res) =>{
         .catch(err => console.log(err));
 })
 
-routes.post('/login/:username/',(req,res)=>{
+routes.post('/user/:username/',(req,res)=>{
     const url = `mongodb+srv://popaye:drowssap@cluster0.m2mv7.mongodb.net/${req.params.username}?retryWrites=true&w=majority`
     const connection = makeConnection(url);
     const Blog = connection.model('blogs',blogschema);
@@ -32,19 +32,42 @@ routes.post('/login/:username/',(req,res)=>{
         username: req.params.username
     });
     blog.save()
-        .then(() => res.redirect(`/login/${req.params.username}/`))
+        .then(() => res.redirect(`/user/${req.params.username}/`))
         .catch(err => console.log(err));
 })
 
-routes.get('/login/:username/blogs',(req,res) =>{
-    res.redirect(`/login/${req.params.username}/`);
+routes.get('/user/:username/blogs',(req,res) =>{
+    res.redirect(`/user/${req.params.username}/`);
 })
 
-routes.get('/login/:username/blogs/create',(req,res) =>{
+routes.get('/user/:username/blogs/create',(req,res) =>{
     res.render('create_blog',{title : "My Blog | Create Blog",username: req.params.username});
 })
 
-routes.get('/login/:username/blogs/:id',(req,res)=>{
+routes.get('/user/:username/blogs/:id/update',(req,res)=>{
+    const url = `mongodb+srv://popaye:drowssap@cluster0.m2mv7.mongodb.net/${req.params.username}?retryWrites=true&w=majority`
+    const connection = makeConnection(url);
+    const Blog = connection.model('blogs',blogschema);
+    Blog.findById(req.params.id)
+        .then((result) =>{
+            res.render('update_blog',{title : "My Blog | blogs", data : result,username: req.params.username});
+        })
+        .catch(err => console.log(err));
+})
+
+routes.put('/user/:username/blogs/:id/update/:dataurl',(req,res)=>{
+    const data = JSON.parse(decodeURI(req.params.dataurl));
+    const url = `mongodb+srv://popaye:drowssap@cluster0.m2mv7.mongodb.net/${req.params.username}?retryWrites=true&w=majority`
+    const connection = makeConnection(url);
+    const Blog = connection.model('blogs',blogschema);
+    Blog.findByIdAndUpdate(req.params.id,data)
+        .then((result) =>{
+            res.json({status : "Done"});
+        })
+        .catch(err => console.log(err));
+})
+
+routes.get('/user/:username/blogs/:id',(req,res)=>{
     const url = `mongodb+srv://popaye:drowssap@cluster0.m2mv7.mongodb.net/${req.params.username}?retryWrites=true&w=majority`
     const connection = makeConnection(url);
     const Blog = connection.model('blogs',blogschema);
@@ -56,14 +79,14 @@ routes.get('/login/:username/blogs/:id',(req,res)=>{
         .catch(() => res.status(404).render('404',{title : "Error | 404"}));
 })
 
-routes.delete('/login/:username/blogs/:id',(req,res)=>{
+routes.delete('/user/:username/blogs/:id',(req,res)=>{
     const url = `mongodb+srv://popaye:drowssap@cluster0.m2mv7.mongodb.net/${req.params.username}?retryWrites=true&w=majority`
     const connection = makeConnection(url);
     const Blog = connection.model('blogs',blogschema);
     const id = req.params.id;
     Blog.findByIdAndDelete(id)
         .then(() =>{
-            res.json({redirect : `/login/${req.params.username}/`});
+            res.json({redirect : `/user/${req.params.username}/`});
         })
         .catch(err => console.log(err));
 })

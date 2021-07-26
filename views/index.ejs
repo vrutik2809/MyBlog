@@ -8,7 +8,7 @@
     <div class="content">
         <% if (data.length > 0) { %>
             <% data.forEach(data => { %>
-                <a href="/login/<%= username %>/blogs/<%= data._id %> ">
+                <a href="/user/<%= data.username %>/blogs/<%= data._id %> ">
                     <h3> <%= data.title %> </h3>
                     <p> <%= data.overview %> </p>
                 </a>

@@ -18,7 +18,7 @@ router.post('/login',(req,res) =>{
                 res.status(404).render('404',{title : "Error | 404"});
             }
             else{
-                res.redirect(`/login/${req.body.username}`);
+                res.redirect(`/user/${req.body.username}`);
             }
         });
 })

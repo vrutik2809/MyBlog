@@ -21,13 +21,13 @@ app.use(registerRoutes);
 //blog routing
 app.use(blogRoutes);
 
-app.get('/login/:username/contact',(req,res) =>{
+app.get('/user/:username/contact',(req,res) =>{
     res.render('contact',{title : "My Blog | Contact",username:req.params.username});
 })
 
 //redirecting
-app.get('/login/:username/contact-us',(req,res) =>{
-    res.redirect('/login/:username/contact');
+app.get('/user/:username/contact-us',(req,res) =>{
+    res.redirect('/user/:username/contact');
 })
 
 app.use((req,res) =>{

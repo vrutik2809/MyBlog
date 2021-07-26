@@ -21,7 +21,7 @@ const blogschema = new Schema({
 },{timestamps : true});
 
 function makeConnection(url){
-    return dB.createConnection(url,{useNewUrlParser : true,useUnifiedTopology: true});
+    return dB.createConnection(url,{useNewUrlParser : true,useUnifiedTopology: true,useFindAndModify: false});
 }
 
 module.exports = {

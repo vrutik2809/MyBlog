@@ -79,6 +79,19 @@ h3{
     font-size: 1.2em;
     cursor: pointer;
 }
+.data a{
+    all: initial;
+}
+.data a button{
+    margin-top: 20px;
+    margin-right: 20px;
+    background: blue;
+    color: white;
+    padding: 6px;
+    border: 0;
+    font-size: 1.2em;
+    cursor: pointer;
+}
 .data button:hover{
     cursor: pointer;
 }
@@ -119,4 +132,18 @@ textarea{
     font-size: 1.2em;
     cursor: pointer;
     
+}
+.update{
+    max-width: 400px;
+    margin: 0 auto;
+}
+.update button#update{
+    margin-top: 20px;
+    margin-right: 20px;
+    background:blue;
+    color: white;
+    padding: 6px;
+    border: 0;
+    font-size: 1.2em;
+    cursor: pointer;
 }

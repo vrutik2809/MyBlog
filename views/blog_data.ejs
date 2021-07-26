@@ -9,20 +9,21 @@
         <h1> <%= data.title %> </h1>
         <h4> <%= data.overview %> </h4>
         <p> <%= data.discription %> </p>
-        <button id = "delete" data-doc = "<%= data._id %>" data-username = "<%= username %>">delete</button>
+        <a href="/user/<%= data.username %>/blogs/<%= data._id %>/update"><button id = "update">Update</button></a>
+        <button id = "delete" data-doc = "<%= data._id %>" data-username = "<%= data.username %>">Delete</button>
     </div>
     <!-- footer -->
     <%- include('./partials/footer') %>
 </body>
 <script>
     const id = document.getElementById("delete");
-    const deletepath = `/login/${id.dataset.username}/blogs/${id.dataset.doc}`;
+    const deletepath = `/user/${id.dataset.username}/blogs/${id.dataset.doc}`;
     async function deleteBlog(){
         const response = await fetch(deletepath,{
             method: "delete"
         });
         const data = await response.json();
-        window.location.href = `/login/${id.dataset.username}/`;
+        window.location.href = `/user/${id.dataset.username}/`;
     }
     id.addEventListener('click',deleteBlog);
 </script>

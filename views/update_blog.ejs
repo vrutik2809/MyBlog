@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- header -->
+<%- include('./partials/header')  %> 
+<body>
+    <!-- nav bar -->
+    <%- include('./partials/nav')  %>
+    <div class="blog update">
+        <label for="title" >Blog title</label>
+        <input type="text" id = "title" name = "title" value = "<%= data.title %>" required>
+        <label for="overview" >Blog overview</label>
+        <input type="text" id = "overview" name = "overview" value = "<%= data.overview %>" required>
+        <label for="discription">Blog discription</label>
+        <textarea id = "discription" name = "discription" required><%= data.discription %></textarea>
+        <button id = "update" data-doc = "<%= data._id %>" data-user = "<%= data.username %>">Update</button>
+    </div>
+    <!-- footer -->
+    <%- include('./partials/footer')  %>
+</body>
+<script>
+    const btn = document.getElementById("update");
+    async function updateData(){
+        const title = String(document.getElementById("title").value);
+        const overview = String(document.getElementById("overview").value);
+        const discription = String(document.getElementById("discription").value);
+        const username = btn.dataset.user;
+        const data = {title,overview,discription,username};
+        const dataurl = encodeURI(JSON.stringify(data));
+        const urlpath = `/user/${btn.dataset.user}/blogs/${btn.dataset.doc}/update/${dataurl}`;
+        const response = await fetch(urlpath,{
+            method: "put"
+        });
+        const result = await response.json();
+        window.location.href = `/user/${btn.dataset.user}/blogs/${btn.dataset.doc}`;
+    }
+    btn.addEventListener('click',updateData);
+</script>
+</html>
