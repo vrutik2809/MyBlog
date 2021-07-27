@@ -8,16 +8,18 @@ router.get('/register',(req,res) =>{
 
 router.post('/register',(req,res) =>{
     const user = new User(req.body);
-    User.findOne(req.body)
+    User.findOne({username : req.body.username})
         .then((result) => {
             if(result == null){
-                res.status(404).render('404',{title : "Error | 404"})
+                user.save()
+                    .then(() => {
+                        res.redirect('/login');
+                    })
+                    .catch(err => console.log(err));
             }
-            user.save()
-                .then(() => {
-                    res.redirect('/login');
-                })
-                .catch(err => console.log(err));
+            else{
+                res.status(404).send("<h1>username already exists</h1>");
+            }
         })
         .catch((err) => console.log(err));
 })
