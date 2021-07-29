@@ -1,5 +1,6 @@
 const User = require('../modules/user');
 const express = require('express');
+const bcrypt = require('bcrypt');
 const router = express.Router();
 
 router.get('/',(req,res) =>{
@@ -10,17 +11,38 @@ router.get('/login',(req,res) =>{
     res.render('signin',{title : "MyBlog | signin"});
 })
 
-router.post('/login',(req,res) =>{
-    const user = new User(req.body);
-    User.findOne(req.body)
-        .then((result) => {
-            if(result == null){
-                res.status(404).render('404',{title : "Error | 404"});
+router.post('/login',async (req,res) =>{
+    const user = await User.findOne({ username : req.body.username });
+    let result = {
+        user_ID: null,
+        error:{
+            username : {
+                message : "",
+                status : false
+            },
+            password : {
+                message : "",
+                status : false
             }
-            else{
-                res.redirect(`/user/${req.body.username}`);
-            }
-        });
+        }
+    }
+    if(user){
+        const password = await bcrypt.compare(req.body.password,user.password);
+        if(password){
+            result.user_ID = user._id;
+            res.status(200).json(result);
+        }
+        else{
+            result.error.password.status = true;
+            result.error.password.message = "Password doesn't match";
+            res.status(404).json(result);
+        }
+    }
+    else{
+        result.error.username.status = true;
+        result.error.username.message = "User doesn't exist";
+        res.status(404).json(result);
+    }
 })
 
 module.exports = router;

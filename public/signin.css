@@ -12,12 +12,12 @@ body{
 .login h1{
     text-align: center;
 }
-.login form input{
+.login input{
     width: 100%;
     margin: 10px 0px;
     padding: 8px;
 }
-.login form button{
+.login button{
     margin-top: 20px;
     width: 100%;
     background:blue;

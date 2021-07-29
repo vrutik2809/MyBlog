@@ -10,14 +10,15 @@
 <body>
     <div class="login">
         <h1>Login</h1>
-        <form action="/login" method="POST">
-            <label for="username">Username</label>
-            <input type="text" name="username" id="username" required>
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" required>
-            <button type = "submit">Login</button>
-        </form>
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" required>
+        <label for="username" id = "user_error"></label><br>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required>
+        <label for="username" id = "password_error"></label><br>
+        <button id = "login">Login</button>
         <h2>Don't have an account? <a href="/register">signup</a></h2>
     </div>
 </body>
+<script src = "/login_validation.js"></script>
 </html>
