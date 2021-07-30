@@ -31,7 +31,7 @@ router.post('/register',async (req,res) =>{
         const user = await User.create(req.body);
         const token = createToken(user._id);
         res.cookie('jwt',token,{httpOnly:true,maxAge: 24 * 60 * 60 * 1000});
-        res.redirect(`/user/${user.username}`);
+        res.status(200).json({errors:{username : ""},username: user.username});
     }
     catch(err){
         const errors = handleError(err);

@@ -1,5 +1,5 @@
 const btn = document.getElementById("signup");
-btn.addEventListener('click',()=>{
+btn.addEventListener('click',async ()=>{
     const user_regex = /^[^ ]+$/;
     const password_regex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^a-zA-z0-9]).{5,}$/
     const username = document.getElementById("username").value;
@@ -23,7 +23,27 @@ btn.addEventListener('click',()=>{
         document.getElementById('password').style.border = '2px solid red';  
     }
     else{
-        btn.setAttribute('type','submit');
+        // btn.setAttribute('type','submit');
+        const body = {
+            username,
+            password
+        }
+        const response = await fetch('/register',{
+            method: "POST",
+            body: JSON.stringify(body),
+            headers: {"Content-type":"application/json"}
+        });
+        const result = await response.json();
+        console.log(result);
+        if(result.errors.username.includes("User aleardy exist")){
+            document.getElementById('lblusername').hidden = false; 
+            document.getElementById('lblusername').innerHTML = "User aleardy exist"; 
+            document.getElementById('lblusername').style.color = 'red'; 
+            document.getElementById('username').style.border = '2px solid red'; 
+        }
+        else{
+            location.assign(`/user/${result.username}`);
+        }
     }
 })
 
