@@ -1,7 +1,13 @@
 const User = require('../modules/user');
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const router = express.Router();
 
+function createToken(id){
+    return jwt.sign({ id },"This is secret",{
+        expiresIn: 24 * 60 * 60
+    })
+}
 function handleError(err){
     let errors = {
         username: "",
@@ -23,6 +29,8 @@ router.get('/register',(req,res) =>{
 router.post('/register',async (req,res) =>{
     try{
         const user = await User.create(req.body);
+        const token = createToken(user._id);
+        res.cookie('jwt',token,{httpOnly:true,maxAge: 24 * 60 * 60 * 1000});
         res.redirect(`/user/${user.username}`);
     }
     catch(err){
