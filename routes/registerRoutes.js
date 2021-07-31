@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 
 function createToken(id){
-    return jwt.sign({ id },"This is secret",{
+    return jwt.sign({ id },`${String(id)}is a secret`,{
         expiresIn: 24 * 60 * 60
     })
 }

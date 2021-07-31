@@ -4,11 +4,13 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const routes = express.Router();
 
-function authenticate(req,res,next){
+async function authenticate(req,res,next){
     const token = req.cookies.jwt;
     if(token){
-        jwt.verify(token,"This is secret",(err,decodedToken)=>{
-            if(err){
+        const user_ID = jwt.decode(req.cookies.jwt).id;
+        const result = await User.findById(user_ID);
+        jwt.verify(token,`${String(user_ID)}is a secret`,(err,decodedToken)=>{
+            if(err || req.params.username != result.username){
                 res.redirect('/login');
             }
             else{
@@ -20,14 +22,7 @@ function authenticate(req,res,next){
         res.redirect('/login');
     }
 }
-routes.get('/user/:username/', authenticate ,(req,res) =>{
-    User.findOne({username: req.params.username})
-        .then((result) => {
-            if(result == null){
-                res.status(404).render('404',{title : "Error | 404"});
-            }
-        });
-        
+routes.get('/user/:username/', authenticate ,(req,res) =>{    
     const url = `mongodb+srv://popaye:drowssap@cluster0.m2mv7.mongodb.net/${req.params.username}?retryWrites=true&w=majority`
     const connection = makeConnection(url);
     const Blog = connection.model('blogs',blogschema);

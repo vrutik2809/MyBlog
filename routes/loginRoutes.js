@@ -5,15 +5,16 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 
 function createToken(id){
-    return jwt.sign({ id },"This is secret",{
+    return jwt.sign({ id },`${String(id)}is a secret`,{
         expiresIn: 24 * 60 * 60
     })
 }
 
-function authenticate(req,res,next){
+async function authenticate(req,res,next){
     const token = req.cookies.jwt;
     if(token){
-        jwt.verify(token,"This is secret",(err,decodedToken)=>{
+        const user_ID = jwt.decode(req.cookies.jwt).id;
+        jwt.verify(token,`${String(user_ID)}is a secret`,(err,decodedToken)=>{
             if(err){
                 res.redirect('/login');
             }
