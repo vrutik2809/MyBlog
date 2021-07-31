@@ -10,12 +10,13 @@ function createToken(id){
     })
 }
 
-async function authenticate(req,res,next){
+function authenticate(req,res,next){
     const token = req.cookies.jwt;
     if(token){
         const user_ID = jwt.decode(req.cookies.jwt).id;
         jwt.verify(token,`${String(user_ID)}is a secret`,(err,decodedToken)=>{
             if(err){
+                res.cookie('redirect',true);
                 res.redirect('/login');
             }
             else{
@@ -34,8 +35,23 @@ router.get('/',authenticate, async (req,res)=>{
     res.redirect(`user/${result.username}`);
 })
 
-router.get('/login',(req,res) =>{
-    res.render('signin',{title : "MyBlog | signin"});
+router.get('/login',async (req,res) =>{
+    const isRedirect = req.cookies.redirect;
+    if(isRedirect){
+        res.clearCookie('redirect');
+        res.render('signin',{title : "MyBlog | signin"});
+    }
+    else{
+        const token = req.cookies.jwt;
+        if(token){
+            const user_ID = jwt.decode(token).id;
+            const result = await User.findById(user_ID);
+            res.redirect(`user/${result.username}`);
+        }
+        else{
+            res.render('signin',{title : "MyBlog | signin"});
+        }
+    }
 })
 
 router.post('/login',async (req,res) =>{

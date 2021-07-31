@@ -11,6 +11,7 @@ async function authenticate(req,res,next){
         const result = await User.findById(user_ID);
         jwt.verify(token,`${String(user_ID)}is a secret`,(err,decodedToken)=>{
             if(err || req.params.username != result.username){
+                res.cookie('redirect',true);
                 res.redirect('/login');
             }
             else{
