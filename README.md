@@ -5,4 +5,4 @@ A Blogging website where user can post, read, update and create new blogs. It al
 
 
 ## Website link
-link is [here](https://myblog-sampleproject.herokuapp.com/login)
+LINK is [here](https://myblog-sampleproject.herokuapp.com/login)
